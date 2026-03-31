@@ -1,14 +1,14 @@
 package com.nilsson.api_wigell_travel.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
+
+import java.time.LocalDate;
 
 public record CustomerPutUpdateDto(
         @NotBlank @Size(max = 50) String firstName,
         @NotBlank @Size(max = 50) String lastName,
         @NotBlank @Size(max = 100) @Email String email,
+        @PastOrPresent LocalDate dateOfBirth,
         @Size(max = 20) @Pattern(regexp = "^\\+?[0-9\\s-()]+$") String phoneNumber
 ) {
 }

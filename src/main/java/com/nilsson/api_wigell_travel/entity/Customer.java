@@ -2,6 +2,10 @@ package com.nilsson.api_wigell_travel.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "customers")
 public class Customer {
@@ -19,19 +23,42 @@ public class Customer {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @Column(name = "email", nullable = false, length = 100)
+    @Column(name = "date_of_birth", nullable = false)
+    private LocalDate dateOfBirth;
+
+    @Column(name = "email", nullable = false, length = 100, unique = true)
     private String email;
 
     @Column(name = "phone_number", length = 20)
     private String phoneNumber;
 
+    @Column(name = "username", length = 50, unique = true)
+    private String username;
+
+    @Column(name = "keycloak_id")
+    private Long keycloakId;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Booking> bookings = new ArrayList<>();
+
     protected Customer() {
     }
 
-    public Customer(String firstName, String lastName, Address address, String email, String phoneNumber) {
+    public Customer(String firstName, String lastName, Address address, LocalDate dateOfBirth, String email, String phoneNumber, String username) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.username = username;
+    }
+
+    public Customer(String firstName, String lastName, Address address, LocalDate dateOfBirth, String email, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
@@ -69,6 +96,14 @@ public class Customer {
         this.address = address;
     }
 
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -83,5 +118,29 @@ public class Customer {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Long getKeycloakId() {
+        return keycloakId;
+    }
+
+    public void setKeycloakId(Long keycloakId) {
+        this.keycloakId = keycloakId;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 }

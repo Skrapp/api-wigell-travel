@@ -7,15 +7,17 @@ import com.nilsson.api_wigell_travel.entity.Customer;
 public final class CustomerMapper {
     private CustomerMapper(){}
 
-    public static Customer fromCreate(CustomerCreateDto dto){
+    public static Customer fromCreate(CustomerWithAccountCreateDto dto){
         Address address = AddressMapper.fromCreate(dto.address());
 
         return new Customer(
                 dto.firstName(),
                 dto.lastName(),
                 address,
+                dto.dateOfBirth(),
                 dto.email(),
-                dto.phoneNumber()
+                dto.phoneNumber(),
+                dto.username()
         );
     }
 
@@ -26,6 +28,7 @@ public final class CustomerMapper {
                 customer.getFirstName(),
                 customer.getLastName(),
                 addressDto,
+                customer.getDateOfBirth(),
                 customer.getEmail(),
                 customer.getPhoneNumber()
         );
