@@ -11,13 +11,11 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    @Column(name = "customer_id", nullable = false)
+    private Long customerId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "destination_id", nullable = false)
-    private Destination destination;
+    @Column(name = "destination_id", nullable = false)
+    private Long destinationId;
 
     @Column(name = "hotel_name", length = 50)
     private String hotelName;
@@ -34,9 +32,9 @@ public class Booking {
     protected Booking() {
     }
 
-    public Booking(Customer customer, Destination destination, String hotelName, LocalDate departureDate, LocalDate returnDate, Double totalPrice) {
-        this.customer = customer;
-        this.destination = destination;
+    public Booking(Long customerId, Long destinationId, String hotelName, LocalDate departureDate, LocalDate returnDate, Double totalPrice) {
+        this.customerId = customerId;
+        this.destinationId = destinationId;
         this.hotelName = hotelName;
         this.departureDate = departureDate;
         this.returnDate = returnDate;
@@ -51,20 +49,20 @@ public class Booking {
         return id;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
-    public Destination getDestination() {
-        return destination;
+    public Long getDestinationId() {
+        return destinationId;
     }
 
-    public void setDestination(Destination destination) {
-        this.destination = destination;
+    public void setDestinationId(Long destinationId) {
+        this.destinationId = destinationId;
     }
 
     public String getHotelName() {

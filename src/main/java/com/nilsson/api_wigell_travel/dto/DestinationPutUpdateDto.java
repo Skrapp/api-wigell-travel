@@ -1,6 +1,5 @@
 package com.nilsson.api_wigell_travel.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
