@@ -19,7 +19,7 @@ public final class AddressMapper {
         return new AddressDto(
                 address.getStreetAddress(),
                 address.getCity(),
-                address.getCity()
+                address.getPostalCode()
         );
     }
 }

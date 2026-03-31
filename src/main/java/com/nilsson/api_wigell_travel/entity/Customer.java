@@ -19,9 +19,11 @@ public class Customer {
     @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id")
-    private Address address;
+    @ManyToMany
+    @JoinTable(name = "customer_address",
+        joinColumns = @JoinColumn(name = "customer_id"),
+        inverseJoinColumns = @JoinColumn(name = "address_id"))
+    private List<Address> addresses = new ArrayList<>();
 
     @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
@@ -44,20 +46,19 @@ public class Customer {
     protected Customer() {
     }
 
-    public Customer(String firstName, String lastName, Address address, LocalDate dateOfBirth, String email, String phoneNumber, String username) {
+    public Customer(String firstName, String lastName, LocalDate dateOfBirth, String email, String phoneNumber, String username) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.address = address;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.username = username;
     }
 
-    public Customer(String firstName, String lastName, Address address, LocalDate dateOfBirth, String email, String phoneNumber) {
+    public Customer(String firstName, String lastName, List<Address> addresses, LocalDate dateOfBirth, String email, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.address = address;
+        this.addresses = addresses;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -88,12 +89,16 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public Address getAddress() {
-        return address;
+    public List<Address> getAddresses() {
+        return addresses;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    public void addAddress(Address address){
+        addresses.add(address);
     }
 
     public LocalDate getDateOfBirth() {

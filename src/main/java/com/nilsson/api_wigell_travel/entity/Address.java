@@ -2,6 +2,9 @@ package com.nilsson.api_wigell_travel.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "addresses")
 public class Address {
@@ -15,8 +18,11 @@ public class Address {
     @Column(name = "city", nullable = false, length = 60)
     private String city;
 
-    @Column(name = "zip_code", nullable = false, length = 10)
+    @Column(name = "postal_code", nullable = false, length = 10)
     private String postalCode;
+
+    @ManyToMany(mappedBy = "addresses")
+    List<Customer> customers = new ArrayList<>();
 
     protected Address() {
     }
@@ -58,5 +64,13 @@ public class Address {
 
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
+    }
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
     }
 }

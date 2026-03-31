@@ -4,16 +4,15 @@ import com.nilsson.api_wigell_travel.dto.*;
 import com.nilsson.api_wigell_travel.entity.Address;
 import com.nilsson.api_wigell_travel.entity.Customer;
 
+import java.util.List;
+
 public final class CustomerMapper {
     private CustomerMapper(){}
 
     public static Customer fromCreate(CustomerWithAccountCreateDto dto){
-        Address address = AddressMapper.fromCreate(dto.address());
-
         return new Customer(
                 dto.firstName(),
                 dto.lastName(),
-                address,
                 dto.dateOfBirth(),
                 dto.email(),
                 dto.phoneNumber(),
@@ -22,12 +21,15 @@ public final class CustomerMapper {
     }
 
     public static CustomerDto toDto(Customer customer) {
-        AddressDto addressDto = AddressMapper.toDto(customer.getAddress());
+        List<AddressDto> addresses = customer.getAddresses().stream()
+                .map(AddressMapper::toDto)
+                .toList();
 
         return new CustomerDto(
+                customer.getId(),
                 customer.getFirstName(),
                 customer.getLastName(),
-                addressDto,
+                addresses,
                 customer.getDateOfBirth(),
                 customer.getEmail(),
                 customer.getPhoneNumber()
