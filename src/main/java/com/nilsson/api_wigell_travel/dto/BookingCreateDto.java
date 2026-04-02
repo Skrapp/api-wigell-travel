@@ -8,9 +8,10 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 
 public record BookingCreateDto(
-        @NotNull @Positive Long destinationId,
+        @Positive Long customerId,
+        @Positive Long destinationId,
         @Size(max = 50) String hotelName,
         @NotNull @FutureOrPresent LocalDate departureDate,
-        @NotNull @Positive int numberOfWeeks
+        @Positive int numberOfWeeks
 ) {
 }

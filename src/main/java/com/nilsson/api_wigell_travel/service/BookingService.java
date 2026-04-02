@@ -18,6 +18,6 @@ public interface BookingService {
      */
 
     BookingDto create(BookingCreateDto dto);
-    void patchUpdate(Long bookingId, BookingPatchUpdateDto dto);
+    BookingDto patchUpdate(Long bookingId, BookingPatchUpdateDto dto);
     List<BookingDto> getCustomersBooking(Long customerId);
 }

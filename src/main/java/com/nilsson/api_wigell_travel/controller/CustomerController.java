@@ -49,6 +49,12 @@ public class CustomerController {
         return ResponseEntity.ok(saved);
     }
 
+    @DeleteMapping("/{customerId}")
+    public ResponseEntity<Void> remove(@PathVariable Long customerId){
+        customerService.deleteCustomer(customerId);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/{customerId}/addresses")
     public ResponseEntity<CustomerDto> addAddress(@PathVariable Long customerId, @RequestBody @Valid AddressCreateDto dto){
         CustomerDto saved = customerService.addAddressToCustomer(customerId, dto);

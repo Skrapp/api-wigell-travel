@@ -11,11 +11,13 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "customer_id", nullable = false)
-    private Long customerId;
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 
-    @Column(name = "destination_id", nullable = false)
-    private Long destinationId;
+    @ManyToOne
+    @JoinColumn(name = "destination_id", nullable = false)
+    private Destination destination;
 
     @Column(name = "hotel_name", length = 50)
     private String hotelName;
@@ -32,15 +34,16 @@ public class Booking {
     protected Booking() {
     }
 
-    public Booking(Long customerId, Long destinationId, String hotelName, LocalDate departureDate, LocalDate returnDate, Double totalPrice) {
-        this.customerId = customerId;
-        this.destinationId = destinationId;
+    public Booking(Customer customer, Destination destination, String hotelName, LocalDate departureDate, LocalDate returnDate, Double totalPrice) {
+        this.customer = customer;
+        this.destination = destination;
         this.hotelName = hotelName;
         this.departureDate = departureDate;
         this.returnDate = returnDate;
         this.totalPrice = totalPrice;
     }
 
+    @SuppressWarnings("unused")
     public void setId(Long id) {
         this.id = id;
     }
@@ -49,20 +52,20 @@ public class Booking {
         return id;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    public Long getDestinationId() {
-        return destinationId;
+    public Destination getDestination() {
+        return destination;
     }
 
-    public void setDestinationId(Long destinationId) {
-        this.destinationId = destinationId;
+    public void setDestination(Destination destination) {
+        this.destination = destination;
     }
 
     public String getHotelName() {

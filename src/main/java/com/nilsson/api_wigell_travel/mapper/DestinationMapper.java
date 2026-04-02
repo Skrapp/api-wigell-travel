@@ -14,13 +14,13 @@ public final class DestinationMapper {
     }
 
     public static DestinationDto toDto(Destination d){
-        return new DestinationDto(d.getWeeklyRate(), d.getHotelName(), d.getCity(), d.getCountry());
+        return new DestinationDto(d.getId(), d.getWeeklyRate(), d.getHotelName(), d.getCity(), d.getCountry());
     }
 
     public static void applyPutUpdate(Destination d, DestinationPutUpdateDto dto){
         d.setWeeklyRate(dto.weeklyRate());
         d.setHotelName(dto.hotelName());
         d.setCity(dto.city());
-        d.setCountry(dto.city());
+        d.setCountry(dto.country());
     }
 }

@@ -4,6 +4,8 @@ import com.nilsson.api_wigell_travel.dto.BookingCreateDto;
 import com.nilsson.api_wigell_travel.dto.BookingDto;
 import com.nilsson.api_wigell_travel.dto.BookingPatchUpdateDto;
 import com.nilsson.api_wigell_travel.entity.Booking;
+import com.nilsson.api_wigell_travel.entity.Customer;
+import com.nilsson.api_wigell_travel.entity.Destination;
 
 import java.time.LocalDate;
 
@@ -11,14 +13,15 @@ public final class BookingMapper {
     private BookingMapper() {
     }
 
-    public static Booking fromCreate(BookingCreateDto dto, Long customerId, double weeklyRate) {
+    public static Booking fromCreate(BookingCreateDto dto, Customer customer, Destination destination) {
         LocalDate returnDate = dto.departureDate().plusWeeks(dto.numberOfWeeks());
-        double totalPrice = weeklyRate * dto.numberOfWeeks();
+        double totalPrice = destination.getWeeklyRate() * dto.numberOfWeeks();
+        String hotelName = dto.hotelName() == null ? destination.getHotelName() : dto.hotelName();
         
         return new Booking(
-                customerId,
-                dto.destinationId(),
-                dto.hotelName(),
+                customer,
+                destination,
+                hotelName,
                 dto.departureDate(),
                 returnDate,
                 totalPrice
@@ -27,7 +30,8 @@ public final class BookingMapper {
 
     public static BookingDto toDto(Booking booking) {
         return new BookingDto(
-                booking.getDestinationId(),
+                booking.getId(),
+                booking.getDestination().getId(),
                 booking.getHotelName(),
                 booking.getDepartureDate(),
                 booking.getReturnDate(),
@@ -35,9 +39,9 @@ public final class BookingMapper {
         );
     }
 
-    public static void applyPatchUpdate(Booking booking, BookingPatchUpdateDto dto, double weeklyRate) {
+    public static void applyPatchUpdate(Booking booking, BookingPatchUpdateDto dto, Destination destination) {
         if (dto.destinationId() != null) {
-            booking.setDestinationId(dto.destinationId());
+            booking.setDestination(destination);
         }
         if (dto.hotelName() != null) {
             booking.setHotelName(dto.hotelName());
@@ -46,7 +50,7 @@ public final class BookingMapper {
             LocalDate newReturnDate = booking.getDepartureDate().plusWeeks(dto.numberOfWeeks());
             booking.setReturnDate(newReturnDate);
             
-            double newTotalPrice = weeklyRate * dto.numberOfWeeks();
+            double newTotalPrice = booking.getDestination().getWeeklyRate() * dto.numberOfWeeks();
             booking.setTotalPrice(newTotalPrice);
         }
     }
