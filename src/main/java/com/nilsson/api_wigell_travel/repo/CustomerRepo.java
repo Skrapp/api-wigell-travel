@@ -10,5 +10,5 @@ public interface CustomerRepo extends JpaRepository<Customer, Long> {
 
     boolean existsByEmailAndIdIsNot(String email, Long id);
 
-    boolean existsByUsername(String username);
+    boolean existsByKeycloakUserId(String keycloakUserId);
 }

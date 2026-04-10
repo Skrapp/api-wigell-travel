@@ -12,6 +12,6 @@ public record CustomerWithAccountCreateDto(
         @NotNull @PastOrPresent LocalDate dateOfBirth,
         @NotBlank @Size(max = 100) @Email String email,
         @Size(max = 20) @Pattern(regexp = "^\\+?[0-9\\s-()]+$") String phoneNumber,
-        @Size(max = 50) String username
+        @Size(min = 36, max = 36) String keycloakUserId
 ) {
 }

@@ -34,12 +34,12 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     @Transactional
     public CustomerDto createCustomerWithAccount(CustomerWithAccountCreateDto dto) {
+        if(customerRepo.existsByKeycloakUserId(dto.keycloakUserId()))
+            throw new IllegalArgumentException("Finns redan en kund i denna tjänst kopplad till denna användare");
         if(customerRepo.existsByEmail(dto.email()))
-            throw new IllegalArgumentException("Email används redan av en annan användare");
-        if(customerRepo.existsByUsername(dto.username()))
-            throw new IllegalArgumentException("Användarnamn används redan av en annan användare");
+            throw new IllegalArgumentException("Email används redan av en annan kund");
 
-        Customer customer= CustomerMapper.fromCreate(dto);
+        Customer customer = CustomerMapper.fromCreate(dto);
         Address address = addressService.getOrCreate(dto.address());
         customer.addAddress(address);
         Customer saved = customerRepo.save(customer);
@@ -52,7 +52,7 @@ public class CustomerServiceImpl implements CustomerService{
     @Transactional
     public CustomerDto putUpdateCustomer(Long id, CustomerPutUpdateDto dto) {
         if(customerRepo.existsByEmailAndIdIsNot(dto.email(), id))
-            throw new IllegalArgumentException("Email används redan av en annan användare");
+            throw new IllegalArgumentException("Email används redan av en annan kund");
 
         Customer customer = customerRepo.findById(id)
                 .orElseThrow(() -> new CustomerNotFoundException(id));
@@ -104,7 +104,7 @@ public class CustomerServiceImpl implements CustomerService{
 
         if(customer.getAddresses().removeIf(address -> address.getId().equals(addressId)))
             customer = customerRepo.save(customer);
-        //Loggning om det togs bort eller inte?
+        //Loggning om det togs bort eller inte
 
         return CustomerMapper.toDto(customer);
     }

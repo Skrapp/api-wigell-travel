@@ -34,11 +34,8 @@ public class Customer {
     @Column(name = "phone_number", length = 20)
     private String phoneNumber;
 
-    @Column(name = "username", length = 50, unique = true)
-    private String username;
-
-    @Column(name = "keycloak_id")
-    private Long keycloakId;
+    @Column(name = "keycloak_user_id", unique = true, length = 36)
+    private String keycloakUserId;
 
     @OneToMany(mappedBy = "customer")
     private List<Booking> bookings = new ArrayList<>();
@@ -46,22 +43,14 @@ public class Customer {
     protected Customer() {
     }
 
-    public Customer(String firstName, String lastName, LocalDate dateOfBirth, String email, String phoneNumber, String username) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.username = username;
-    }
 
-    public Customer(String firstName, String lastName, List<Address> addresses, LocalDate dateOfBirth, String email, String phoneNumber) {
+    public Customer(String firstName, String lastName, LocalDate dateOfBirth, String email, String phoneNumber, String keycloakUserId) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.addresses = addresses;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.keycloakUserId = keycloakUserId;
     }
 
     @SuppressWarnings("unused")
@@ -125,20 +114,12 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getUsername() {
-        return username;
+    public String getKeycloakUserId() {
+        return keycloakUserId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Long getKeycloakId() {
-        return keycloakId;
-    }
-
-    public void setKeycloakId(Long keycloakId) {
-        this.keycloakId = keycloakId;
+    public void setKeycloakUserId(String keycloakId) {
+        this.keycloakUserId = keycloakId;
     }
 
     public List<Booking> getBookings() {

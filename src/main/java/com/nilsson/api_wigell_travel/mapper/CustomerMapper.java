@@ -16,7 +16,7 @@ public final class CustomerMapper {
                 dto.dateOfBirth(),
                 dto.email(),
                 dto.phoneNumber(),
-                dto.username()
+                dto.keycloakUserId()
         );
     }
 
