@@ -2,6 +2,8 @@ package com.nilsson.api_wigell_travel.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "destinations")
 public class Destination {
@@ -20,6 +22,9 @@ public class Destination {
 
     @Column(name = "country", nullable = false, length = 40)
     private String country;
+
+    @OneToMany(mappedBy = "destination")
+    private List<Booking> bookings;
 
     protected Destination() {
     }
@@ -70,5 +75,13 @@ public class Destination {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 }

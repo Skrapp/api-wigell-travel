@@ -5,6 +5,7 @@ import com.nilsson.api_wigell_travel.entity.Address;
 import com.nilsson.api_wigell_travel.mapper.AddressMapper;
 import com.nilsson.api_wigell_travel.repo.AddressRepo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AddressServiceImpl implements AddressService{
@@ -14,6 +15,7 @@ public class AddressServiceImpl implements AddressService{
         this.addressRepo = addressRepo;
     }
 
+    @Transactional
     @Override
     public Address getOrCreate(AddressCreateDto dto) {
         //se ifall address redan finns

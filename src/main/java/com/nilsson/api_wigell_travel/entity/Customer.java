@@ -19,6 +19,7 @@ public class Customer {
     @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
 
+    //Detta funkar men gör att address kan vara okopplad till någon Customer (zombie)
     @ManyToMany
     @JoinTable(name = "customer_address",
         joinColumns = @JoinColumn(name = "customer_id"),
@@ -37,7 +38,7 @@ public class Customer {
     @Column(name = "keycloak_user_id", unique = true, length = 36)
     private String keycloakUserId;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Booking> bookings = new ArrayList<>();
 
     protected Customer() {

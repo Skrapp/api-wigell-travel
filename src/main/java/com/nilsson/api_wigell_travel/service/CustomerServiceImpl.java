@@ -62,11 +62,16 @@ public class CustomerServiceImpl implements CustomerService{
         return CustomerMapper.toDto(saved);
     }
 
+    /**
+     * Deletion of a customer deletes all bookings connected to said customer
+     * @param id
+     */
     @Override
     @Transactional
     public void deleteCustomer(Long id) {
         if(!customerRepo.existsById(id))
             throw new CustomerNotFoundException(id);
+
         customerRepo.deleteById(id);
     }
 

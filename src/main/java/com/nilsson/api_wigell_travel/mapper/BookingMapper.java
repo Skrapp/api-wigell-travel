@@ -29,9 +29,11 @@ public final class BookingMapper {
     }
 
     public static BookingDto toDto(Booking booking) {
+        Long destinationId = booking.getDestination() != null ? booking.getDestination().getId() : null;
+
         return new BookingDto(
                 booking.getId(),
-                booking.getDestination().getId(),
+                destinationId,
                 booking.getHotelName(),
                 booking.getDepartureDate(),
                 booking.getReturnDate(),
