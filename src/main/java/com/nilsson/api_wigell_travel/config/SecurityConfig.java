@@ -5,14 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
@@ -25,39 +22,11 @@ import java.util.Map;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    /*
-    Booking
-    User
-        • Boka resa POST /api/v1/bookings
-        • Boka om resa PATCH /api/v1/bookings/{bookingId} (tillåtna fält: reslängd (veckor),
-        destination, hotell)
-        • Se tidigare och aktiva bokningar GET /api/v1/bookings?customerId={customerId}
-     */
-    /*
-    Customer
-    Admin
-        • Lista kunder GET /api/v1/customers
-        • Lägga till kund POST /api/v1/customers
-        • Ta bort kund DELETE /api/v1/customers/{customerId}
-        • Uppdatera kund PUT /api/v1/customers/{customerId}
-        • Lägga till adress POST /api/v1/customers/{customerId}/addresses
-        • Ta bort adress DELETE /api/v1/customers/{customerId}/addresses/{addressId}
-     */
-     /*
-     Destination
-    User
-        • Lista resmål GET /api/v1/destinations
-    Admin
-        • Lägga till resmål POST /api/v1/destinations
-        • Ta bort resmål DELETE /api/v1/destinations/{destinationId}
-        • Uppdatera resmål PUT /api/v1/destinations/{destinationId}
-        • Lista resmål GET /api/v1/destinations
-     */
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> {})
                 .sessionManagement((sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)))
                 .authorizeHttpRequests(auth -> auth
                         //Booking
@@ -69,6 +38,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/api/v1/destinations/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/api/v1/destinations/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/api/v1/destinations/**").hasRole("ADMIN")
+
+                        //Actuator
+                        .requestMatchers("/actuator/**").permitAll()
 
                         //Övrigt
                         .anyRequest().authenticated()
