@@ -22,11 +22,13 @@ public class BookingServiceImpl implements BookingService{
     private final BookingRepo bookingRepo;
     private final CustomerRepo customerRepo;
     private final DestinationRepo destinationRepo;
+    private final PricingService pricingService;
 
-    public BookingServiceImpl(BookingRepo bookingRepo, CustomerRepo customerRepo, DestinationRepo destinationRepo) {
+    public BookingServiceImpl(BookingRepo bookingRepo, CustomerRepo customerRepo, DestinationRepo destinationRepo, PricingService pricingService) {
         this.bookingRepo = bookingRepo;
         this.customerRepo = customerRepo;
         this.destinationRepo = destinationRepo;
+        this.pricingService = pricingService;
     }
 
     @Override
@@ -40,9 +42,10 @@ public class BookingServiceImpl implements BookingService{
         Customer customer = customerRepo.findById(dto.customerId())
                 .orElseThrow(() -> new CustomerNotFoundException(dto.customerId()));
 
+        Booking booking = BookingMapper.fromCreate(dto, customer, destination);
+        booking.setTotalPricePln(pricingService.fromSekToPln(booking.getTotalPriceSek()));
 
-
-        Booking saved = bookingRepo.save(BookingMapper.fromCreate(dto, customer, destination));
+        Booking saved = bookingRepo.save(booking);
         return BookingMapper.toDto(saved);
     }
 
@@ -61,6 +64,8 @@ public class BookingServiceImpl implements BookingService{
                 .orElseThrow(() -> new BookingNotFoundException(bookingId));
 
         BookingMapper.applyPatchUpdate(booking, dto, destination);
+
+        booking.setTotalPricePln(pricingService.fromSekToPln(booking.getTotalPriceSek()));
 
         Booking saved = bookingRepo.save(booking);
         return BookingMapper.toDto(saved);

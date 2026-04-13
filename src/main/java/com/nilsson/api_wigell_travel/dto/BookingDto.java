@@ -8,6 +8,7 @@ public record BookingDto (
         String hotelName,
         LocalDate departureDate,
         LocalDate returnDate,
-        Double totalPrice
+        Double totalPriceSek,
+        Double totalPricePln
 ){
 }

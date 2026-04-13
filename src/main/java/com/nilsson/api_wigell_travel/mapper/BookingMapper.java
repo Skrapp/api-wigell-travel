@@ -16,7 +16,6 @@ public final class BookingMapper {
     public static Booking fromCreate(BookingCreateDto dto, Customer customer, Destination destination) {
         LocalDate returnDate = dto.departureDate().plusWeeks(dto.numberOfWeeks());
         double totalPriceSek = destination.getWeeklyRate() * dto.numberOfWeeks();
-        double totalPricePln = totalPriceSek * 0.39; //TODO change to converter
         String hotelName = dto.hotelName() == null ? destination.getHotelName() : dto.hotelName();
         
         return new Booking(
@@ -25,8 +24,7 @@ public final class BookingMapper {
                 hotelName,
                 dto.departureDate(),
                 returnDate,
-                totalPriceSek,
-                totalPricePln
+                totalPriceSek
         );
     }
 
@@ -39,7 +37,8 @@ public final class BookingMapper {
                 booking.getHotelName(),
                 booking.getDepartureDate(),
                 booking.getReturnDate(),
-                booking.getTotalPriceSek()
+                booking.getTotalPriceSek(),
+                booking.getTotalPricePln()
         );
     }
 

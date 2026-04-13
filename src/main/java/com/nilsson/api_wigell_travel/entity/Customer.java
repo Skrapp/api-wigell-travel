@@ -44,7 +44,6 @@ public class Customer {
     protected Customer() {
     }
 
-
     public Customer(String firstName, String lastName, LocalDate dateOfBirth, String email, String phoneNumber, String keycloakUserId) {
         this.firstName = firstName;
         this.lastName = lastName;

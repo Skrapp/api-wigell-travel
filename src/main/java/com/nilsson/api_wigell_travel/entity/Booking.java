@@ -37,14 +37,13 @@ public class Booking {
     protected Booking() {
     }
 
-    public Booking(Customer customer, Destination destination, String hotelName, LocalDate departureDate, LocalDate returnDate, Double totalPriceSek, Double totalPricePln) {
+    public Booking(Customer customer, Destination destination, String hotelName, LocalDate departureDate, LocalDate returnDate, Double totalPriceSek) {
         this.customer = customer;
         this.destination = destination;
         this.hotelName = hotelName;
         this.departureDate = departureDate;
         this.returnDate = returnDate;
         this.totalPriceSek = totalPriceSek;
-        this.totalPricePln = totalPricePln;
     }
 
     @SuppressWarnings("unused")
