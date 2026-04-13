@@ -34,10 +34,10 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     @Transactional
     public CustomerDto createCustomerWithAccount(CustomerWithAccountCreateDto dto) {
-        if(customerRepo.existsByKeycloakUserId(dto.keycloakUserId()))
-            throw new IllegalArgumentException("Finns redan en kund i denna tjänst kopplad till denna användare");
+        if(dto.keycloakUserId() != null && customerRepo.existsByKeycloakUserId(dto.keycloakUserId()))
+            throw new IllegalArgumentException("Finns redan en kund i denna tjänst kopplad till denna användare: " + dto.keycloakUserId());
         if(customerRepo.existsByEmail(dto.email()))
-            throw new IllegalArgumentException("Email används redan av en annan kund");
+            throw new IllegalArgumentException("Email används redan av en annan kund: " + dto.email());
 
         Customer customer = CustomerMapper.fromCreate(dto);
         Address address = addressService.getOrCreate(dto.address());
@@ -52,7 +52,7 @@ public class CustomerServiceImpl implements CustomerService{
     @Transactional
     public CustomerDto putUpdateCustomer(Long id, CustomerPutUpdateDto dto) {
         if(customerRepo.existsByEmailAndIdIsNot(dto.email(), id))
-            throw new IllegalArgumentException("Email används redan av en annan kund");
+            throw new IllegalArgumentException("Email används redan av en annan kund: " + dto.email());
 
         Customer customer = customerRepo.findById(id)
                 .orElseThrow(() -> new CustomerNotFoundException(id));

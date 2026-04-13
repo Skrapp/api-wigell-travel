@@ -5,8 +5,11 @@ import com.nilsson.api_wigell_travel.dto.DestinationDto;
 import com.nilsson.api_wigell_travel.dto.DestinationPutUpdateDto;
 import com.nilsson.api_wigell_travel.entity.Destination;
 import com.nilsson.api_wigell_travel.exception.DestinationNotFoundException;
+import com.nilsson.api_wigell_travel.logging.LoggingAspectControllers;
 import com.nilsson.api_wigell_travel.mapper.DestinationMapper;
 import com.nilsson.api_wigell_travel.repo.DestinationRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +39,8 @@ public class DestinationServiceImpl implements DestinationService{
     }
 
     /**
-     * Deletion of destination removes all relations to bookings by setting destination to null.
+     * Before deletion of a destination, all relations to bookings are removed by setting the destination
+     * in said bookings to null.
      * @param id
      */
     @Override

@@ -34,10 +34,10 @@ public class BookingServiceImpl implements BookingService{
     public BookingDto create(BookingCreateDto dto) {
         Destination destination = destinationRepo.findById(dto.destinationId())
                 .orElseThrow(() -> new DestinationNotFoundException(dto.destinationId()));
+
+        //TODO Ändra till customer kopplad till currentUser?
         //var currentUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-
-        //TODO Ändra till customer kopplad till currentUser
         Customer customer = customerRepo.findById(dto.customerId())
                 .orElseThrow(() -> new CustomerNotFoundException(dto.customerId()));
 
