@@ -15,13 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/bookings")
 public class BookingController {
-    /*
-    User
-        • Boka resa POST /api/v1/bookings
-        • Boka om resa PATCH /api/v1/bookings/{bookingId} (tillåtna fält: reslängd (veckor),
-        destination, hotell)
-        • Se tidigare och aktiva bokningar GET /api/v1/bookings?customerId={customerId}
-     */
     private final BookingService bookingService;
 
     public BookingController(BookingService bookingService) {

@@ -1,7 +1,6 @@
 package com.nilsson.api_wigell_travel.mapper;
 
 import com.nilsson.api_wigell_travel.dto.*;
-import com.nilsson.api_wigell_travel.entity.Address;
 import com.nilsson.api_wigell_travel.entity.Customer;
 
 import java.util.List;

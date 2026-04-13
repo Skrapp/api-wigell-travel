@@ -8,8 +8,6 @@ import com.nilsson.api_wigell_travel.exception.DestinationNotFoundException;
 import com.nilsson.api_wigell_travel.logging.LoggingAspectControllers;
 import com.nilsson.api_wigell_travel.mapper.DestinationMapper;
 import com.nilsson.api_wigell_travel.repo.DestinationRepo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

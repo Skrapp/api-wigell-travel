@@ -9,14 +9,6 @@ import java.util.List;
 
 @Service
 public interface BookingService {
-    /*
-    User
-        • Boka resa POST /api/v1/bookings
-        • Boka om resa PATCH /api/v1/bookings/{bookingId} (tillåtna fält: reslängd (veckor),
-        destination, hotell)
-        • Se tidigare och aktiva bokningar GET /api/v1/bookings?customerId={customerId}
-     */
-
     BookingDto create(BookingCreateDto dto);
     BookingDto patchUpdate(Long bookingId, BookingPatchUpdateDto dto);
     List<BookingDto> getCustomersBooking(Long customerId);

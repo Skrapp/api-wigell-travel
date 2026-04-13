@@ -2,7 +2,6 @@ package com.nilsson.api_wigell_travel.logging;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +61,5 @@ public class LoggingAspectControllers {
         logger.info("DELETE successful in {} with id: {}",
                 joinPoint.getSignature().getDeclaringTypeName(), id);
     }
-
-
 }
 

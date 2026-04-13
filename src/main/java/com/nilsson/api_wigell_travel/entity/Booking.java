@@ -28,19 +28,23 @@ public class Booking {
     @Column(name = "return_date", nullable = false)
     private LocalDate returnDate;
 
-    @Column(name = "total_price", nullable = false)
-    private Double totalPrice;
+    @Column(name = "total_price_sek", nullable = false)
+    private Double totalPriceSek;
+
+    @Column(name = "total_price_pln", nullable = false)
+    private Double totalPricePln;
 
     protected Booking() {
     }
 
-    public Booking(Customer customer, Destination destination, String hotelName, LocalDate departureDate, LocalDate returnDate, Double totalPrice) {
+    public Booking(Customer customer, Destination destination, String hotelName, LocalDate departureDate, LocalDate returnDate, Double totalPriceSek, Double totalPricePln) {
         this.customer = customer;
         this.destination = destination;
         this.hotelName = hotelName;
         this.departureDate = departureDate;
         this.returnDate = returnDate;
-        this.totalPrice = totalPrice;
+        this.totalPriceSek = totalPriceSek;
+        this.totalPricePln = totalPricePln;
     }
 
     @SuppressWarnings("unused")
@@ -92,11 +96,19 @@ public class Booking {
         this.returnDate = returnDate;
     }
 
-    public Double getTotalPrice() {
-        return totalPrice;
+    public Double getTotalPriceSek() {
+        return totalPriceSek;
     }
 
-    public void setTotalPrice(Double totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setTotalPriceSek(Double totalPrice) {
+        this.totalPriceSek = totalPrice;
+    }
+
+    public Double getTotalPricePln() {
+        return totalPricePln;
+    }
+
+    public void setTotalPricePln(Double totalPricePln) {
+        this.totalPricePln = totalPricePln;
     }
 }

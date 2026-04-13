@@ -13,7 +13,6 @@ import com.nilsson.api_wigell_travel.mapper.BookingMapper;
 import com.nilsson.api_wigell_travel.repo.BookingRepo;
 import com.nilsson.api_wigell_travel.repo.CustomerRepo;
 import com.nilsson.api_wigell_travel.repo.DestinationRepo;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,6 +39,8 @@ public class BookingServiceImpl implements BookingService{
 
         Customer customer = customerRepo.findById(dto.customerId())
                 .orElseThrow(() -> new CustomerNotFoundException(dto.customerId()));
+
+
 
         Booking saved = bookingRepo.save(BookingMapper.fromCreate(dto, customer, destination));
         return BookingMapper.toDto(saved);
