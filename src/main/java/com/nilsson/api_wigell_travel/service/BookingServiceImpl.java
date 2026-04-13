@@ -14,6 +14,7 @@ import com.nilsson.api_wigell_travel.repo.BookingRepo;
 import com.nilsson.api_wigell_travel.repo.CustomerRepo;
 import com.nilsson.api_wigell_travel.repo.DestinationRepo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,12 +33,10 @@ public class BookingServiceImpl implements BookingService{
     }
 
     @Override
+    @Transactional
     public BookingDto create(BookingCreateDto dto) {
         Destination destination = destinationRepo.findById(dto.destinationId())
                 .orElseThrow(() -> new DestinationNotFoundException(dto.destinationId()));
-
-        //TODO Ändra till customer kopplad till currentUser?
-        //var currentUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         Customer customer = customerRepo.findById(dto.customerId())
                 .orElseThrow(() -> new CustomerNotFoundException(dto.customerId()));
@@ -50,6 +49,7 @@ public class BookingServiceImpl implements BookingService{
     }
 
     @Override
+    @Transactional
     public BookingDto patchUpdate(Long bookingId, BookingPatchUpdateDto dto) {
         if(dto.numberOfWeeks() != null && dto.numberOfWeeks() <= 0)
             throw new IllegalArgumentException("Antal veckor kan inte vara 0 eller lägre");
@@ -72,6 +72,7 @@ public class BookingServiceImpl implements BookingService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<BookingDto> getCustomersBooking(Long customerId) {
         if(!customerRepo.existsById(customerId))
             throw new CustomerNotFoundException(customerId);
